@@ -5,6 +5,7 @@ import com.example.firstproject.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,7 @@ public class BoardController {
     public String getAllBoards(Model model) {
         List<Board> boards = boardService.findAllBoards();
         model.addAttribute("boards", boards);
-        return "boardList"; // HTML 파일의 이름
+        return "boardList";
     }
 
     @GetMapping("/create")
@@ -50,17 +51,24 @@ public class BoardController {
     public String getBoardById(@PathVariable("id") Long id, Model model) {
         Board board = boardService.findBoardById(id);
         model.addAttribute("board", board);
-        return "boardDetail"; // HTML 파일의 이름
+        return "boardDetail";
     }
 
-    @GetMapping("/{id}/edit")
+    @GetMapping(value = "/{id}/edit", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         Board board = boardService.findBoardById(id);
         model.addAttribute("board", board);
         return "boardEdit";
     }
 
-    @PostMapping("/{id}/edit")
+    @PutMapping(value = "/{id}/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String updateBoard_1(@PathVariable("id") Long id, @RequestBody Board board) {
+        board.setBoardId(id);
+        boardService.updateBoard(board);
+        return "redirect:/boards";
+    }
+
+    @PutMapping("/{id}/edit")
     public String updateBoard(@PathVariable("id") Long id, @ModelAttribute("board") Board board) {
         board.setBoardId(id);
         boardService.updateBoard(board);
