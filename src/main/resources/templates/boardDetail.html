@@ -2,15 +2,28 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Board Detail</title>
+  <title>게시판 상세정보</title>
 </head>
 <body>
-<h1 th:text="${board.boardTitle}">Board Title</h1>
-<p th:text="${board.content}">Board Content</p>
-<a th:href="@{/boards/{id}/edit(id=${board.boardId})}">Edit</a>
-<form action="/boards/${board.id}/delete" method="post">
-  <button type="submit">Delete</button>
+<h1>게시판 상세정보</h1>
+<div>
+  <p>ID: <span th:text="${board.boardId}"></span></p>
+  <p>Title: <span th:text="${board.boardTitle}"></span></p>
+  <p>Content: <span th:text="${board.content}"></span></p>
+</div>
+<br>
+<form th:action="@{/boards/{id}/delete(id=${board.boardId})}" method="post" id="deleteForm">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Delete">
 </form>
-<a href="/boards">Back to List</a>
+<a th:href="@{/boards}">Back to List</a>
+<script>
+  document.getElementById('deleteForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    if (confirm('정말 삭제하시겠습니까?')) {
+      this.submit();
+    }
+  });
+</script>
 </body>
 </html>

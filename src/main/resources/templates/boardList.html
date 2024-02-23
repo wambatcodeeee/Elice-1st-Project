@@ -2,26 +2,31 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Board List</title>
+    <title>게시판 목록</title>
 </head>
 <body>
-<h1>Board List</h1>
-<table>
+<h1>게시판 목록</h1>
+<table border="1">
     <thead>
     <tr>
         <th>ID</th>
-        <th>Title</th>
-        <th>Content</th>
+        <th>제목</th>
+        <th>조작</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="board : ${boards}">
         <td th:text="${board.boardId}"></td>
         <td th:text="${board.boardTitle}"></td>
-        <td th:text="${board.content}"></td>
+        <td>
+            <a th:href="@{/boards/{id}(id=${board.boardId})}">Detail</a>
+            <a th:href="@{/boards/{id}/edit(id=${board.boardId})}">Edit</a>
+            <a th:href="@{/boards/{id}/delete(id=${board.boardId})}" onclick="return confirm('정말로?')">Delete</a>
+        </td>
     </tr>
     </tbody>
 </table>
+<br>
 <a href="/boards/create">Create New Board</a>
 </body>
 </html>

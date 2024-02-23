@@ -23,17 +23,17 @@ public class BoardRepositoryImpl implements BoardRepository {
 
     @Override
     public void update(Board board) {
-        jdbcTemplate.update("UPDATE board SET boardTitle = ? WHERE boardId = ?", board.getBoardTitle(), board.getBoardId());
+        jdbcTemplate.update("UPDATE board SET board_title = ? WHERE board_id = ?", board.getBoardTitle(), board.getBoardId());
     }
 
     @Override
     public void deleteById(Long boardId) {
-        jdbcTemplate.update("DELETE FROM board WHERE boardId = ?", boardId);
+        jdbcTemplate.update("DELETE FROM board WHERE board_id = ?", boardId);
     }
 
     @Override
     public Board findById(Long boardId) {
-        List<Board> result = jdbcTemplate.query("SELECT * FROM board WHERE boardId = ?",
+        List<Board> result = jdbcTemplate.query("SELECT * FROM board WHERE board_id = ?",
                 new Object[]{boardId},
                 new BeanPropertyRowMapper<>(Board.class));
 

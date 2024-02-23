@@ -12,5 +12,6 @@ import java.util.List;
 public class BoardDTO {
     private Long boardId;
     private String boardTitle;
+    private String content;
     private List<PostDTO> posts;
 }

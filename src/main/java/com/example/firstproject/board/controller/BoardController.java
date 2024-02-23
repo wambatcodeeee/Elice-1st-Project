@@ -3,6 +3,7 @@ package com.example.firstproject.board.controller;
 import com.example.firstproject.board.entity.Board;
 import com.example.firstproject.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,8 +34,14 @@ public class BoardController {
         return "boardCreate";
     }
 
-    @PostMapping("/create")
+    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String saveBoard(@ModelAttribute("board") Board board) {
+        boardService.saveBoard(board);
+        return "redirect:/boards";
+    }
+
+    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String saveBoard_1(@RequestBody Board board) {
         boardService.saveBoard(board);
         return "redirect:/boards";
     }
