@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Board</title>
+</head>
+<body>
+<h1>Edit Board</h1>
+<form action="/boards/${board.id}/edit" method="post" th:object="${board}">
+  <input type="hidden" th:field="*{boardId}" />
+  <label>Title: <input type="text" th:field="*{boardTitle}" /></label><br/>
+  <label>Content: <textarea th:field="*{content}"></textarea></label><br/>
+  <button type="submit">Submit</button>
+</form>
+<a th:href="@{/boards/{id}(id=${board.boardId})}">Cancel</a>
+</body>
+</html>
