@@ -2,12 +2,14 @@ package com.example.firstproject.board.service;
 
 import com.example.firstproject.board.entity.Board;
 import com.example.firstproject.board.repository.BoardRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class BoardService {
     private final BoardRepository boardRepository;
 

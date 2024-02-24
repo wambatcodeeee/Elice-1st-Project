@@ -16,12 +16,12 @@
     </thead>
     <tbody>
     <tr th:each="board : ${boards}">
-        <td th:text="${board.boardId}"></td>
+        <td th:text="${board.id}"></td>
         <td th:text="${board.boardTitle}"></td>
         <td>
-            <a th:href="@{/boards/{id}(id=${board.boardId})}">Detail</a>
-            <a th:href="@{/boards/{id}/edit(id=${board.boardId})}">Edit</a>
-            <a th:href="@{/boards/{id}/delete(id=${board.boardId})}" onclick="return confirm('정말로?')">Delete</a>
+            <a th:href="@{/boards/{id}(id=${board.id})}">Detail</a>
+            <a th:href="@{/boards/{id}/edit(id=${board.id})}">Edit</a>
+            <a th:href="@{/boards/{id}/delete(id=${board.id})}" onclick="return confirm('정말로?')">Delete</a>
         </td>
     </tr>
     </tbody>

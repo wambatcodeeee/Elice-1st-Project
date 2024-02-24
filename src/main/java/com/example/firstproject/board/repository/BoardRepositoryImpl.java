@@ -27,7 +27,7 @@ public class BoardRepositoryImpl implements BoardRepository {
         jdbcTemplate.update("UPDATE board SET board_title = ?, content = ? WHERE board_id = ?",
                 board.getBoardTitle(),
                 board.getContent(),
-                board.getBoardId());
+                board.getId());
     }
 
     @Override

@@ -20,7 +20,8 @@ import java.util.List;
 public class Post extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postId;
+    @Column(name = "post_id")
+    private Long id;
 
     @Column(nullable = false)
     private String recipeName;
@@ -29,7 +30,7 @@ public class Post extends BaseEntity {
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "boardId", referencedColumnName = "boardId")
+    @JoinColumn(name = "board_id", referencedColumnName = "board_id")
     private Board board;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)

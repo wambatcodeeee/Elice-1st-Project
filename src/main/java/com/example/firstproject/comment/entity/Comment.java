@@ -25,6 +25,6 @@ public class Comment extends BaseEntity {
     private String password;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "postId", referencedColumnName = "postId")
+    @JoinColumn(name = "post_id", referencedColumnName = "post_id")
     private Post post;
 }

@@ -1,6 +1,7 @@
 package com.example.firstproject.board.controller;
 
 import com.example.firstproject.board.entity.Board;
+import com.example.firstproject.board.entity.BoardDTO;
 import com.example.firstproject.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -26,24 +27,24 @@ public class BoardController {
     public String getAllBoards(Model model) {
         List<Board> boards = boardService.findAllBoards();
         model.addAttribute("boards", boards);
-        return "boardList";
+        return "board/boards";
     }
 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         model.addAttribute("board", new Board());
-        return "boardCreate";
+        return "board/createBoard";
     }
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String saveBoard(@ModelAttribute("board") Board board) {
-        boardService.saveBoard(board);
+    public String saveBoard(@ModelAttribute("board") BoardDTO boardDTO) {
+        boardService.saveBoard(boardDTO.toEntity());
         return "redirect:/boards";
     }
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String saveBoard_1(@RequestBody Board board) {
-        boardService.saveBoard(board);
+    public String saveBoard_1(@RequestBody BoardDTO boardDTO) {
+        boardService.saveBoard(boardDTO.toEntity());
         return "redirect:/boards";
     }
 
@@ -54,23 +55,26 @@ public class BoardController {
         return "boardDetail";
     }
 
-    @GetMapping(value = "/{id}/edit", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @GetMapping("/{id}/edit")
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         Board board = boardService.findBoardById(id);
+        if (board == null) {
+            return "error";
+        }
         model.addAttribute("board", board);
-        return "boardEdit";
+        return "board/editBoard";
     }
 
     @PutMapping(value = "/{id}/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
     public String updateBoard_1(@PathVariable("id") Long id, @RequestBody Board board) {
-        board.setBoardId(id);
+        board.update(id);
         boardService.updateBoard(board);
         return "redirect:/boards";
     }
 
-    @PutMapping("/{id}/edit")
+    @PutMapping(value = "/{id}/edit", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String updateBoard(@PathVariable("id") Long id, @ModelAttribute("board") Board board) {
-        board.setBoardId(id);
+        board.update(id);
         boardService.updateBoard(board);
         return "redirect:/boards";
     }

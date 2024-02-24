@@ -10,15 +10,14 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "board")
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "boardId")
-    private Long boardId;
+    @Column(name = "board_id")
+    private Long id;
 
     @Column(name = "boardTitle")
     private String boardTitle;
@@ -29,8 +28,14 @@ public class Board {
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
 
-    public Board(long boardId, String boardTitle) {
-        this.boardId = boardId;
+    public void update(Long id){
+        this.id = id;
+    }
+
+    @Builder
+    public Board(Long id, String boardTitle, String content) {
+        this.id = id;
         this.boardTitle = boardTitle;
+        this.content = content;
     }
 }
