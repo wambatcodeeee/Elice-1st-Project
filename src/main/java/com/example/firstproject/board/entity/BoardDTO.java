@@ -15,13 +15,9 @@ public class BoardDTO {
     private String content;
 
     @Builder
-    public BoardDTO(Long id, String boardTitle, String content){
+    public BoardDTO(Long id, String boardTitle, String content) {
         this.id = id;
         this.boardTitle = boardTitle;
         this.content = content;
-    }
-
-    public Board toEntity(){
-        return Board.builder().id(id).boardTitle(boardTitle).content(content).build();
     }
 }

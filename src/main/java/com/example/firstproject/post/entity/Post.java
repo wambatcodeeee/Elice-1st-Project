@@ -36,4 +36,11 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
+    public void setBoard(Board board) {
+        this.board = board;
+        if (!this.board.getPosts().contains(this)) {
+            this.board.getPosts().add(this);
+        }
+    }
+
 }

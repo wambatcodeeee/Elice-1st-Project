@@ -2,7 +2,9 @@ package com.example.firstproject.board.controller;
 
 import com.example.firstproject.board.entity.Board;
 import com.example.firstproject.board.entity.BoardDTO;
+import com.example.firstproject.board.entity.BoardMapper;
 import com.example.firstproject.board.service.BoardService;
+import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -17,10 +19,12 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
+    private final BoardMapper boardMapper;
 
     @Autowired
-    public BoardController(BoardService boardService) {
+    public BoardController(BoardService boardService, BoardMapper boardMapper) {
         this.boardService = boardService;
+        this.boardMapper = boardMapper;
     }
 
     @GetMapping
@@ -38,13 +42,15 @@ public class BoardController {
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String saveBoard(@ModelAttribute("board") BoardDTO boardDTO) {
-        boardService.saveBoard(boardDTO.toEntity());
+        Board board = boardMapper.boardDTOToBoard(boardDTO);
+        boardService.saveBoard(board);
         return "redirect:/boards";
     }
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public String saveBoard_1(@RequestBody BoardDTO boardDTO) {
-        boardService.saveBoard(boardDTO.toEntity());
+        Board board = boardMapper.boardDTOToBoard(boardDTO);
+        boardService.saveBoard(board);
         return "redirect:/boards";
     }
 

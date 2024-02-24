@@ -13,6 +13,4 @@ public class PostDTO {
     private Long postId;
     private String recipeName;
     private String description;
-    private BoardDTO board;
-    private List<CommentDTO> comments;
 }
