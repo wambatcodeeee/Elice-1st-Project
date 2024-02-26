@@ -4,6 +4,7 @@ import com.example.firstproject.Exception.Exception;
 import com.example.firstproject.Exception.ExceptionEnum;
 import com.example.firstproject.board.entity.Board;
 import com.example.firstproject.board.service.BoardService;
+import com.example.firstproject.post.dto.PostResponseDTO;
 import com.example.firstproject.post.entity.Post;
 import com.example.firstproject.post.repository.PostRepository;
 import org.springframework.data.domain.Page;
@@ -36,6 +37,16 @@ public class PostService {
     public Post findPost(Long postId) {
         return postRepository.findById(postId)
                 .orElseThrow(() -> new Exception(ExceptionEnum.POST_NOT_FOUND));
+    }
+
+    public PostResponseDTO findPostById(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new Exception(ExceptionEnum.POST_NOT_FOUND));
+        return PostResponseDTO.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .build();
     }
 
     public Post createPost(Post post, Long boardId) {

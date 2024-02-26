@@ -1,17 +1,13 @@
 package com.example.firstproject.post.controller;
 
-import com.example.firstproject.board.entity.Board;
-import com.example.firstproject.board.service.BoardService;
+import com.example.firstproject.board.dto.BoardResponseDTO;
 import com.example.firstproject.comment.entity.Comment;
 import com.example.firstproject.comment.service.CommentService;
+import com.example.firstproject.post.dto.PostRequestDTO;
 import com.example.firstproject.post.entity.Post;
-import com.example.firstproject.post.entity.PostDTO;
 import com.example.firstproject.post.entity.PostMapper;
 import com.example.firstproject.post.service.PostService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,15 +47,15 @@ public class PostController {
     }
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String createPostPost(@ModelAttribute PostDTO postPostDto, @RequestParam Long boardId) {
-        Post post = postMapper.postDTOToPost(postPostDto);
+    public String createPostPost(@ModelAttribute PostRequestDTO postRequestDTO, @RequestParam Long boardId) {
+        Post post = postMapper.postRequestDTOToPost(postRequestDTO);
         Post createdPost = postService.createPost(post, boardId);
         return "redirect:/boards/" + createdPost.getBoard().getId();
     }
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String createPostPost_1(@RequestBody PostDTO postPostDto, @RequestParam Long boardId) {
-        Post post = postMapper.postDTOToPost(postPostDto);
+    public String createPostPost_1(@RequestBody PostRequestDTO postRequestDTO, @RequestParam Long boardId) {
+        Post post = postMapper.postRequestDTOToPost(postRequestDTO);
         Post createdPost = postService.createPost(post, boardId);
         return "redirect:/boards/" + createdPost.getBoard().getId();
     }
@@ -72,8 +68,8 @@ public class PostController {
     }
 
     @PostMapping(value = "/{postId}/edit", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String editPost(@PathVariable Long postId, @ModelAttribute PostDTO postPostDto, RedirectAttributes redirectAttributes) {
-        Post post = postMapper.postDTOToPost(postPostDto);
+    public String editPost(@PathVariable Long postId, @ModelAttribute PostRequestDTO postRequestDTO, RedirectAttributes redirectAttributes) {
+        Post post = postMapper.postRequestDTOToPost(postRequestDTO);
         Post updatedPost = postService.updatePost(post, postId);
 
         redirectAttributes.addAttribute("postId", updatedPost.getId());
@@ -82,8 +78,8 @@ public class PostController {
     }
 
     @PostMapping(value = "/{postId}/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String editPost_1(@PathVariable Long postId, @RequestBody PostDTO postPostDto, RedirectAttributes redirectAttributes) {
-        Post post = postMapper.postDTOToPost(postPostDto);
+    public String editPost_1(@PathVariable Long postId, @RequestBody PostRequestDTO postRequestDTO, RedirectAttributes redirectAttributes) {
+        Post post = postMapper.postRequestDTOToPost(postRequestDTO);
         Post updatedPost = postService.updatePost(post, postId);
 
         redirectAttributes.addAttribute("postId", updatedPost.getId());

@@ -1,6 +1,9 @@
 package com.example.firstproject.post.entity;
 
+import com.example.firstproject.post.dto.PostRequestDTO;
+
 @org.mapstruct.Mapper(componentModel = "spring")
 public interface PostMapper {
-    Post postDTOToPost(PostDTO postDTO);
+    Post postRequestDTOToPost(PostRequestDTO postRequestDTO);
+    PostRequestDTO postToPostResponseDTO(Post post);
 }
