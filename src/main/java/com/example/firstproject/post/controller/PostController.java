@@ -26,20 +26,21 @@ public class PostController {
 
     private final PostService postService;
     private final PostMapper postMapper;
-    //private final CommentService commentService;
+    private final CommentService commentService;
 
     @Autowired
-    public PostController(PostService postService, PostMapper postMapper){
+    public PostController(PostService postService, PostMapper postMapper, CommentService commentService){
         this.postService = postService;
         this.postMapper = postMapper;
+        this.commentService = commentService;
     }
 
     @GetMapping("/{postId}")
     public String getPostDetail(@PathVariable Long postId, Model model) {
         Post post = postService.findPost(postId);
         model.addAttribute("post", post);
-        //List<Comment> comments = commentService.findCommentsByPostId(postId);
-        //model.addAttribute("comments", comments);
+        List<Comment> comments = commentService.findCommentsByPostId(postId);
+        model.addAttribute("comments", comments);
         return "post/post";
     }
 
