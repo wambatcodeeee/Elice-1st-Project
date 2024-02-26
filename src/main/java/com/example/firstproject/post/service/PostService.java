@@ -41,7 +41,6 @@ public class PostService {
     public Post createPost(Post post, Long boardId) {
         Board boardToCreate = boardService.findBoardById(boardId);
         post.setBoard(boardToCreate);
-
         return postRepository.save(post);
     }
 
@@ -61,7 +60,6 @@ public class PostService {
     public void deletePost(Long id) {
         Post foundPost = postRepository.findById(id)
                 .orElseThrow(() -> new Exception(ExceptionEnum.POST_NOT_FOUND));
-
         postRepository.delete(foundPost);
     }
 }
