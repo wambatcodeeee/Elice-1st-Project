@@ -4,8 +4,12 @@ import com.example.firstproject.board.entity.Board;
 import com.example.firstproject.board.entity.BoardDTO;
 import com.example.firstproject.board.entity.BoardMapper;
 import com.example.firstproject.board.service.BoardService;
+import com.example.firstproject.post.entity.Post;
+import com.example.firstproject.post.service.PostService;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
@@ -20,11 +24,13 @@ public class BoardController {
 
     private final BoardService boardService;
     private final BoardMapper boardMapper;
+    private final PostService postService;
 
     @Autowired
-    public BoardController(BoardService boardService, BoardMapper boardMapper) {
+    public BoardController(BoardService boardService, BoardMapper boardMapper, PostService postService) {
         this.boardService = boardService;
         this.boardMapper = boardMapper;
+        this.postService = postService;
     }
 
     @GetMapping
@@ -32,6 +38,22 @@ public class BoardController {
         List<Board> boards = boardService.findAllBoards();
         model.addAttribute("boards", boards);
         return "board/boards";
+    }
+
+    @GetMapping("/{id}")
+    public String getBoard(@PathVariable Long id,
+                           @RequestParam(defaultValue = "0") int page,
+                           @RequestParam(defaultValue = "10") int size,
+                           @RequestParam(required = false) String keyword,
+                           Model model) {
+        Board board = boardService.findBoardById(id);
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Post> postPage = postService.findPostsByBoardAndKeyword(board, keyword, pageRequest);
+
+        model.addAttribute("board", board);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("postPage", postPage);
+        return "board/board";
     }
 
     @GetMapping("/create")
@@ -54,13 +76,6 @@ public class BoardController {
         return "redirect:/boards";
     }
 
-    @GetMapping("/{id}")
-    public String getBoardById(@PathVariable("id") Long id, Model model) {
-        Board board = boardService.findBoardById(id);
-        model.addAttribute("board", board);
-        return "boardDetail";
-    }
-
     @GetMapping("/{id}/edit")
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         Board board = boardService.findBoardById(id);
@@ -71,15 +86,15 @@ public class BoardController {
         return "board/editBoard";
     }
 
-    @PutMapping(value = "/{id}/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String updateBoard_1(@PathVariable("id") Long id, @RequestBody Board board) {
-        board.update(id);
+    @PostMapping(value = "/{id}/edit", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String updateBoard(@PathVariable("id") Long id, @ModelAttribute("board") BoardDTO boardDTO) {
+        Board board = boardMapper.boardDTOToBoard(boardDTO).toBuilder().id(id).build();
         boardService.updateBoard(board);
         return "redirect:/boards";
     }
 
-    @PutMapping(value = "/{id}/edit", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String updateBoard(@PathVariable("id") Long id, @ModelAttribute("board") Board board) {
+    @PostMapping(value = "/{id}/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String updateBoard_1(@PathVariable("id") Long id, @RequestBody Board board) {
         board.update(id);
         boardService.updateBoard(board);
         return "redirect:/boards";

@@ -4,10 +4,7 @@ import com.example.firstproject.BaseEntity;
 import com.example.firstproject.board.entity.Board;
 import com.example.firstproject.comment.entity.Comment;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Table(name = "post")
 public class Post extends BaseEntity {
     @Id
@@ -24,13 +22,13 @@ public class Post extends BaseEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String recipeName;
+    private String title;
 
     @Column(nullable = false)
-    private String description;
+    private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id", referencedColumnName = "board_id")
+    @JoinColumn(name = "board_id", referencedColumnName = "id")
     private Board board;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
@@ -42,5 +40,4 @@ public class Post extends BaseEntity {
             this.board.getPosts().add(this);
         }
     }
-
 }

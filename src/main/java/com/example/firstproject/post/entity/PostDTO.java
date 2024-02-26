@@ -7,10 +7,16 @@ import lombok.*;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class PostDTO {
-    private Long postId;
-    private String recipeName;
-    private String description;
+    private Long id;
+    private String title;
+    private String content;
+
+    @Builder
+    public PostDTO(Long id, String title, String content) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+    }
 }

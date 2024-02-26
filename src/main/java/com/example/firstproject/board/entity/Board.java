@@ -16,10 +16,9 @@ import java.util.List;
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "board_id")
     private Long id;
 
-    @Column(name = "boardTitle")
+    @Column(nullable = false, name = "board_title")
     private String boardTitle;
 
     @Column
@@ -32,7 +31,7 @@ public class Board {
         this.id = id;
     }
 
-    @Builder
+    @Builder(toBuilder = true)
     public Board(Long id, String boardTitle, String content) {
         this.id = id;
         this.boardTitle = boardTitle;
