@@ -21,7 +21,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User Login(String userId, String password){
+    public User login(String userId, String password){
         User user = userRepository.findByUserId(userId);
         if(user != null && user.getPassword().equals(password)){
             return user;
