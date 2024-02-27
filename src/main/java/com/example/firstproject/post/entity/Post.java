@@ -3,6 +3,7 @@ package com.example.firstproject.post.entity;
 import com.example.firstproject.BaseEntity;
 import com.example.firstproject.board.entity.Board;
 import com.example.firstproject.comment.entity.Comment;
+import com.example.firstproject.image.entity.Image;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,6 +34,9 @@ public class Post extends BaseEntity {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
+    private Image image;
 
     public void setBoard(Board board) {
         this.board = board;
