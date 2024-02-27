@@ -27,7 +27,8 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public void updateBoard(Board board) {
+    public void updateBoard(Board board, MultipartFile file) throws IOException {
+        board = boardFileService.fileUpload(file, board);
         boardRepository.update(board);
     }
 

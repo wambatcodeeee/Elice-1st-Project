@@ -93,19 +93,20 @@ public class BoardController {
         return "board/editBoard";
     }
 
-    @PostMapping(value = "/{id}/edit", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String updateBoard(@PathVariable("id") Long id, @ModelAttribute("board") BoardRequestDTO boardRequestDTO) {
+    @PostMapping(value = "/{id}/edit")
+    public String updateBoard(@PathVariable("id") Long id, @ModelAttribute("board") BoardRequestDTO boardRequestDTO,
+                              MultipartFile file) throws IOException {
         Board board = boardMapper.boardRequestDTOToBoard(boardRequestDTO).toBuilder().id(id).build();
-        boardService.updateBoard(board);
+        boardService.updateBoard(board, file);
         return "redirect:/boards";
     }
 
-    @PostMapping(value = "/{id}/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
+    /**@PostMapping(value = "/{id}/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
     public String updateBoard_1(@PathVariable("id") Long id, @RequestBody BoardRequestDTO boardRequestDTO) {
         Board board = boardMapper.boardRequestDTOToBoard(boardRequestDTO).toBuilder().id(id).build();
         boardService.updateBoard(board);
         return "redirect:/boards";
-    }
+    }**/
 
     @DeleteMapping("/{id}/delete")
     public String deleteBoard(@PathVariable("id") Long id) {

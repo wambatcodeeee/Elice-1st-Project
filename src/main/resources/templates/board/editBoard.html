@@ -21,7 +21,7 @@
   <div class="header mb-5">
     <h1 class="text-center">게시판 수정</h1>
   </div>
-  <form th:action="@{/boards/{id}/edit(id=${boardResponseDTO.id})}" method="post">
+  <form th:action="@{/boards/{id}/edit(id=${boardResponseDTO.id})}" method="post" enctype="multipart/form-data">
   <div class="mb-3">
       <label for="name">게시판 이름</label>
       <input type="text" class="form-control" id="name" name="boardTitle" maxlength="20"
@@ -31,6 +31,10 @@
       <label for="description">게시판 설명</label>
       <textarea class="form-control" id="description" name="content" maxlength="200"
                 placeholder="게시판 설명 입력 (최대 200자)" th:text="${boardResponseDTO.content}"></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="file">이미지 업로드</label>
+      <input type="file" class="form-control" id="file" name="file"/>
     </div>
     <button type="submit" class="btn btn-primary">게시판 수정</button>
     <button type="button" class="btn btn-secondary" onclick="window.history.back();">취소</button>
