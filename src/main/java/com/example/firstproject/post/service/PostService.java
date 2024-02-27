@@ -15,8 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Optional;
-import java.util.UUID;
-import java.io.File;
 
 @Service
 @Transactional
@@ -24,10 +22,12 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final BoardService boardService;
+    private final FileService fileService;
 
-    public PostService(PostRepository postRepository, BoardService boardService) {
+    public PostService(PostRepository postRepository, BoardService boardService, FileService fileService) {
         this.boardService = boardService;
         this.postRepository = postRepository;
+        this.fileService = fileService;
     }
 
     public Page<Post> findPostsByBoardAndKeyword(Board board, String keyword, PageRequest pageRequest) {
@@ -56,21 +56,12 @@ public class PostService {
     public Post createPost(Post post, Long boardId, MultipartFile file) throws IOException {
         Board boardToCreate = boardService.findBoardById(boardId);
         post.setBoard(boardToCreate);
-
-        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
-
-        UUID uuid = UUID.randomUUID();
-        String fileName = uuid + "_" + file.getOriginalFilename();
-
-        File saveFile = new File(projectPath, fileName);
-        file.transferTo(saveFile);
-        post.setFilename(fileName);
-        post.setFilepath("/files/" + fileName);
+        post = fileService.FileUpload(file, post);
 
         return postRepository.save(post);
     }
 
-    public Post updatePost(Post post, Long postId) {
+    public Post updatePost(Post post, Long postId, MultipartFile file) throws IOException {
         post.setId(postId);
         Post foundPost = postRepository.findById(post.getId())
                 .orElseThrow(() -> new Exception(ExceptionEnum.POST_NOT_FOUND));
@@ -79,6 +70,8 @@ public class PostService {
                 .ifPresent(foundPost::setTitle);
         Optional.ofNullable(post.getContent())
                 .ifPresent(foundPost::setContent);
+
+        foundPost = fileService.FileUpload(file, foundPost);
 
         return postRepository.save(foundPost);
     }

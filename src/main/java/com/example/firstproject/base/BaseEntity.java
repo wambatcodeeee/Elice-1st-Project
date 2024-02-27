@@ -1,4 +1,4 @@
-package com.example.firstproject;
+package com.example.firstproject.base;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.example.firstproject.comment.entity;
 
-import com.example.firstproject.BaseEntity;
+import com.example.firstproject.base.BaseEntity;
 import jakarta.persistence.*;
 import com.example.firstproject.post.entity.Post;
 import lombok.*;

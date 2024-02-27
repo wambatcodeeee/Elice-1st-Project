@@ -24,6 +24,12 @@ public class Board {
     @Column
     private String content;
 
+    @Column
+    private String filename;
+
+    @Column
+    private String filepath;
+
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
 

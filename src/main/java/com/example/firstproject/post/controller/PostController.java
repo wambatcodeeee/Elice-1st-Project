@@ -48,7 +48,7 @@ public class PostController {
     }
 
     @PostMapping(value = "/create")
-    public String createPostPost(@ModelAttribute PostRequestDTO postRequestDTO, @RequestParam Long boardId, MultipartFile file) throws IOException {
+    public String createPost(@ModelAttribute PostRequestDTO postRequestDTO, @RequestParam Long boardId, MultipartFile file) throws IOException {
         Post post = postMapper.postRequestDTOToPost(postRequestDTO);
         Post createdPost = postService.createPost(post, boardId, file);
 
@@ -69,17 +69,18 @@ public class PostController {
         return "post/editPost";
     }
 
-    @PostMapping(value = "/{postId}/edit", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String editPost(@PathVariable Long postId, @ModelAttribute PostRequestDTO postRequestDTO, RedirectAttributes redirectAttributes) {
+    @PostMapping(value = "/{postId}/edit")
+    public String editPost(@PathVariable Long postId, @ModelAttribute PostRequestDTO postRequestDTO,
+                           MultipartFile file, RedirectAttributes redirectAttributes) throws IOException {
         Post post = postMapper.postRequestDTOToPost(postRequestDTO);
-        Post updatedPost = postService.updatePost(post, postId);
+        Post updatedPost = postService.updatePost(post, postId, file);
 
         redirectAttributes.addAttribute("postId", updatedPost.getId());
         redirectAttributes.addFlashAttribute("message", "게시글이 수정되었습니다.");
         return "redirect:/posts/{postId}";
     }
 
-    @PostMapping(value = "/{postId}/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
+    /**@PostMapping(value = "/{postId}/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
     public String editPost_1(@PathVariable Long postId, @RequestBody PostRequestDTO postRequestDTO, RedirectAttributes redirectAttributes) {
         Post post = postMapper.postRequestDTOToPost(postRequestDTO);
         Post updatedPost = postService.updatePost(post, postId);
@@ -87,7 +88,7 @@ public class PostController {
         redirectAttributes.addAttribute("postId", updatedPost.getId());
         redirectAttributes.addFlashAttribute("message", "게시글이 수정되었습니다.");
         return "redirect:/posts/{postId}";
-    }
+    }**/
 
     @DeleteMapping("/{postId}")
     public String deletePost(@PathVariable Long postId, RedirectAttributes redirectAttributes) {
