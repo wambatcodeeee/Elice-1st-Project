@@ -17,16 +17,18 @@ public class BoardRepositoryImpl implements BoardRepository {
 
     @Override
     public void save(Board board) {
-        jdbcTemplate.update("INSERT INTO board (board_title, content) VALUES (?, ?)", board.getBoardTitle(),
-                board.getContent());
+        jdbcTemplate.update("INSERT INTO board (board_title, content, filename, filepath) VALUES (?, ?, ?, ?)", board.getBoardTitle(),
+                board.getContent(), board.getFilename(), board.getFilepath());
     }
 
 
     @Override
     public void update(Board board) {
-        jdbcTemplate.update("UPDATE board SET board_title = ?, content = ? WHERE id = ?",
+        jdbcTemplate.update("UPDATE board SET board_title = ?, content = ?, filename = ?, filepath = ? WHERE id = ?",
                 board.getBoardTitle(),
                 board.getContent(),
+                board.getFilename(),
+                board.getFilepath(),
                 board.getId());
     }
 

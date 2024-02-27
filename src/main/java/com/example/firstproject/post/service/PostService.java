@@ -22,12 +22,12 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final BoardService boardService;
-    private final FileService fileService;
+    private final PostFileService postFileService;
 
-    public PostService(PostRepository postRepository, BoardService boardService, FileService fileService) {
+    public PostService(PostRepository postRepository, BoardService boardService, PostFileService postFileService) {
         this.boardService = boardService;
         this.postRepository = postRepository;
-        this.fileService = fileService;
+        this.postFileService = postFileService;
     }
 
     public Page<Post> findPostsByBoardAndKeyword(Board board, String keyword, PageRequest pageRequest) {
@@ -56,7 +56,7 @@ public class PostService {
     public Post createPost(Post post, Long boardId, MultipartFile file) throws IOException {
         Board boardToCreate = boardService.findBoardById(boardId);
         post.setBoard(boardToCreate);
-        post = fileService.FileUpload(file, post);
+        post = postFileService.FileUpload(file, post);
 
         return postRepository.save(post);
     }
@@ -71,7 +71,7 @@ public class PostService {
         Optional.ofNullable(post.getContent())
                 .ifPresent(foundPost::setContent);
 
-        foundPost = fileService.FileUpload(file, foundPost);
+        foundPost = postFileService.FileUpload(file, foundPost);
 
         return postRepository.save(foundPost);
     }

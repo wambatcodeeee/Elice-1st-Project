@@ -14,7 +14,9 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,19 +68,19 @@ public class BoardController {
         return "board/createBoard";
     }
 
-    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String saveBoard(@ModelAttribute("board") BoardRequestDTO boardRequestDTO) {
+    @PostMapping(value = "/create")
+    public String saveBoard(@ModelAttribute("board") BoardRequestDTO boardRequestDTO, MultipartFile file) throws IOException {
         Board board = boardMapper.boardRequestDTOToBoard(boardRequestDTO);
-        boardService.saveBoard(board);
+        boardService.saveBoard(board, file);
         return "redirect:/boards";
     }
 
-    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    /**@PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public String saveBoard_1(@RequestBody BoardRequestDTO boardRequestDTO) {
         Board board = boardMapper.boardRequestDTOToBoard(boardRequestDTO);
         boardService.saveBoard(board);
         return "redirect:/boards";
-    }
+    }**/
 
     @GetMapping("/{id}/edit")
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
