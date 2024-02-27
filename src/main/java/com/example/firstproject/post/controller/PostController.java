@@ -1,10 +1,7 @@
 package com.example.firstproject.post.controller;
 
-import com.example.firstproject.board.controller.BoardController;
-import com.example.firstproject.board.dto.BoardResponseDTO;
 import com.example.firstproject.comment.entity.Comment;
 import com.example.firstproject.comment.service.CommentService;
-import com.example.firstproject.image.dto.ImageDTO;
 import com.example.firstproject.post.dto.PostRequestDTO;
 import com.example.firstproject.post.entity.Post;
 import com.example.firstproject.post.entity.PostMapper;
