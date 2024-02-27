@@ -30,14 +30,14 @@ public class BoardRepositoryImplTest {
 
     @Test
     public void testSave() {
-        Board board = new Board(1L, "Test Board");
+        Board board = new Board(1L, "Test Board", "hihi");
         boardRepository.save(board);
         verify(jdbcTemplate, times(1)).update(eq("INSERT INTO Board (boardTitle) VALUES (?)"), eq("Test Board"));
     }
 
     @Test
     public void testUpdate() {
-        Board board = new Board(1L, "Updated Board Title");
+        Board board = new Board(1L, "Updated Board Title", "hihi1");
         boardRepository.update(board);
         verify(jdbcTemplate, times(1)).update(eq("UPDATE Board SET boardTitle = ? WHERE boardId = ?"), eq("Updated Board Title"), eq(1L));
     }

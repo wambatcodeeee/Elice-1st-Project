@@ -48,6 +48,7 @@
       <div class="container border rounded p-4 position-relative">
         <div class="header mb-3">
           <h2 class="text-start" th:text="${post.title}">게시글 제목</h2>
+          <img class="img-thumbnail w-50 h-50 me-3" th:src="@{/files/{filepath}(filepath=${post.filename})}" th:alt="${post.filename}" />
         </div>
         <p class="m-0" th:text="${post.content}">게시글 내용</p>
         <hr class="mt-4" />

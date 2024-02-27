@@ -1,4 +1,4 @@
-package com.example.firstproject;
+package com.example.firstproject.base;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -18,9 +18,10 @@ import java.time.LocalDateTime;
 public abstract class BaseEntity {
 
     @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime createDate;
+    @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP")
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private LocalDateTime updateDate;
+    @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP")
+    private LocalDateTime updatedAt;
 }

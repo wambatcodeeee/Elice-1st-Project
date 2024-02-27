@@ -10,27 +10,37 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "board")
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "boardId")
-    private Long boardId;
+    private Long id;
 
-    @Column(name = "boardTitle")
+    @Column(nullable = false, name = "board_title")
     private String boardTitle;
 
     @Column
     private String content;
 
+    @Column
+    private String filename;
+
+    @Column
+    private String filepath;
+
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
 
-    public Board(long boardId, String boardTitle) {
-        this.boardId = boardId;
+    public void update(Long id){
+        this.id = id;
+    }
+
+    @Builder(toBuilder = true)
+    public Board(Long id, String boardTitle, String content) {
+        this.id = id;
         this.boardTitle = boardTitle;
+        this.content = content;
     }
 }

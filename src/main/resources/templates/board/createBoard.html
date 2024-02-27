@@ -19,41 +19,50 @@
         font-family: "Elice DX Neolli", sans-serif;
       }
     </style>
-    <title>게시글 추가</title>
+    <title>게시판 추가</title>
   </head>
   <body>
     <div class="container my-5">
       <div class="header mb-5">
-        <h1 class="text-center">게시글 추가</h1>
+        <h1 class="text-center">게시판 추가</h1>
       </div>
-      <form th:action="@{/posts/create(boardId=${boardId})}" method="post" enctype="multipart/form-data">
+      <form th:action="@{/boards/create}" method="post" th:object="${boardRequestDTO}" enctype="multipart/form-data">
         <div class="mb-3">
-          <label for="title">게시글 제목</label>
+          <label for="name">게시판 이름</label>
           <input
             type="text"
             class="form-control"
-            id="title"
-            name="title"
-            maxlength="30"
-            placeholder="게시글 제목 입력 (최대 30자)"
+            id="name"
+            name="name"
+            maxlength="20"
+            placeholder="게시판 이름 입력 (최대 20자)"
             required
+            th:field="*{boardTitle}"
           />
         </div>
         <div class="mb-3">
-          <label for="content">내용</label>
+          <label for="description">게시판 설명</label>
           <textarea
             class="form-control"
-            id="content"
-            name="content"
-            placeholder="내용 입력"
+            id="description"
+            name="description"
+            maxlength="200"
+            placeholder="게시판 설명 입력 (최대 200자)"
+            th:field="*{content}"
           ></textarea>
         </div>
         <div class="mb-3">
           <label for="file">이미지 업로드</label>
           <input type="file" class="form-control" id="file" name="file"/>
         </div>
-        <button type="submit" class="btn btn-primary">업로드</button>
-        <button type="button" class="btn btn-secondary" onclick="window.history.back();">취소</button>
+        <button type="submit" class="btn btn-primary">게시판 추가</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          onclick="window.history.back();"
+        >
+          취소
+        </button>
       </form>
     </div>
 
