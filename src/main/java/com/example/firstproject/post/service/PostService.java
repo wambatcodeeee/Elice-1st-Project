@@ -11,8 +11,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
+import java.io.File;
 
 @Service
 @Transactional
@@ -49,9 +53,20 @@ public class PostService {
                 .build();
     }
 
-    public Post createPost(Post post, Long boardId) {
+    public Post createPost(Post post, Long boardId, MultipartFile file) throws IOException {
         Board boardToCreate = boardService.findBoardById(boardId);
         post.setBoard(boardToCreate);
+
+        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+
+        UUID uuid = UUID.randomUUID();
+        String fileName = uuid + "_" + file.getOriginalFilename();
+
+        File saveFile = new File(projectPath, fileName);
+        file.transferTo(saveFile);
+        post.setFilename(fileName);
+        post.setFilepath("/files/" + fileName);
+
         return postRepository.save(post);
     }
 

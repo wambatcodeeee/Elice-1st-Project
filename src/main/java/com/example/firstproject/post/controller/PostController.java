@@ -1,8 +1,10 @@
 package com.example.firstproject.post.controller;
 
+import com.example.firstproject.board.controller.BoardController;
 import com.example.firstproject.board.dto.BoardResponseDTO;
 import com.example.firstproject.comment.entity.Comment;
 import com.example.firstproject.comment.service.CommentService;
+import com.example.firstproject.image.dto.ImageDTO;
 import com.example.firstproject.post.dto.PostRequestDTO;
 import com.example.firstproject.post.entity.Post;
 import com.example.firstproject.post.entity.PostMapper;
@@ -12,8 +14,10 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -46,19 +50,20 @@ public class PostController {
         return "post/createPost";
     }
 
-    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String createPostPost(@ModelAttribute PostRequestDTO postRequestDTO, @RequestParam Long boardId) {
+    @PostMapping(value = "/create")
+    public String createPostPost(@ModelAttribute PostRequestDTO postRequestDTO, @RequestParam Long boardId, MultipartFile file) throws IOException {
         Post post = postMapper.postRequestDTOToPost(postRequestDTO);
-        Post createdPost = postService.createPost(post, boardId);
+        Post createdPost = postService.createPost(post, boardId, file);
+
         return "redirect:/boards/" + createdPost.getBoard().getId();
     }
 
-    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    /**@PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public String createPostPost_1(@RequestBody PostRequestDTO postRequestDTO, @RequestParam Long boardId) {
         Post post = postMapper.postRequestDTOToPost(postRequestDTO);
         Post createdPost = postService.createPost(post, boardId);
         return "redirect:/boards/" + createdPost.getBoard().getId();
-    }
+    }**/
 
     @GetMapping("/{postId}/edit")
     public String editPost(@PathVariable Long postId, Model model) {
@@ -90,7 +95,7 @@ public class PostController {
     @DeleteMapping("/{postId}")
     public String deletePost(@PathVariable Long postId, RedirectAttributes redirectAttributes) {
         postService.deletePost(postId);
-        redirectAttributes.addFlashAttribute("message", "과목이 제거되었습니다.");
+        redirectAttributes.addFlashAttribute("message", "게시글이 제거되었습니다.");
         return "redirect:/posts";
     }
 }

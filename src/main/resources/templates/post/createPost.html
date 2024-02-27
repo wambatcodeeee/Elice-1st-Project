@@ -26,7 +26,7 @@
       <div class="header mb-5">
         <h1 class="text-center">게시글 추가</h1>
       </div>
-      <form th:action="@{/posts/create(boardId=${boardId})}" method="post">
+      <form th:action="@{/posts/create(boardId=${boardId})}" method="post" enctype="multipart/form-data">
         <div class="mb-3">
           <label for="title">게시글 제목</label>
           <input
@@ -48,14 +48,12 @@
             placeholder="내용 입력"
           ></textarea>
         </div>
+        <div class="mb-3">
+          <label for="file">이미지 업로드</label>
+          <input type="file" class="form-control" id="file" name="file"/>
+        </div>
         <button type="submit" class="btn btn-primary">업로드</button>
-        <button
-          type="button"
-          class="btn btn-secondary"
-          onclick="window.history.back();"
-        >
-          취소
-        </button>
+        <button type="button" class="btn btn-secondary" onclick="window.history.back();">취소</button>
       </form>
     </div>
 
