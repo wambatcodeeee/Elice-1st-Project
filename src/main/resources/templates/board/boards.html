@@ -72,6 +72,7 @@
                 <img
                   class="img-thumbnail w-50 h-50 me-3"
                   th:src="@{/files/{filepath}(filepath=${board.filename})}"
+                  onerror="this.src='hellobit.png'"
                   th:alt="${board.filename}"
                 />
                 <div>
