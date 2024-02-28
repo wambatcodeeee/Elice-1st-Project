@@ -39,7 +39,7 @@ public class UserController {
         User loginUser = userService.login(user.getUserId(), user.getPassword());
         if (loginUser != null) {
             model.addAttribute("userId", user.getUserId());
-            return "/board/boards";
+            return "redirect:/boards";
         } else {
             return "user/login";
         }
