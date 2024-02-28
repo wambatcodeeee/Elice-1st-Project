@@ -22,7 +22,8 @@ public class BoardRepositoryImpl implements BoardRepository {
                 board.getContent(),
                 board.getFilename(),
                 board.getFilepath(),
-                board.getUser());
+                board.getUser().getUserId(),
+                board.getUser().getPassword());
     }
 
 
@@ -33,7 +34,8 @@ public class BoardRepositoryImpl implements BoardRepository {
                 board.getContent(),
                 board.getFilename(),
                 board.getFilepath(),
-                board.getUser(),
+                board.getUser().getUserId(),
+                board.getUser().getPassword(),
                 board.getId());
     }
 
