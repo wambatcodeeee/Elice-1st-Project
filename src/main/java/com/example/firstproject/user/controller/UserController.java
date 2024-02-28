@@ -24,8 +24,13 @@ public class UserController {
 
     @PostMapping("/signup")
     public String signup(@RequestParam("userId") String userId, @RequestParam("password") String password) {
-        userService.signup(userId, password);
-        return "redirect:/login";
+        if(userService.validation(userId)){
+            return "user/signup";
+        }else {
+            User user = new User(userId, password);
+            userService.signup(user);
+            return "redirect:/login";
+        }
     }
 
     @GetMapping("/login")

@@ -14,10 +14,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void signup(String userId, String password) {
-        User user = new User();
-        user.setUserId(userId);
-        user.setPassword(password);
+    public boolean validation(String userId){
+        return userRepository.existsByUserId(userId);
+    }
+
+    public void signup(User user) {
+        user.setUserId(user.getUserId());
+        user.setPassword(user.getPassword());
         userRepository.save(user);
     }
 
