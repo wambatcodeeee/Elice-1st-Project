@@ -27,7 +27,7 @@
         <h1 class="text-center">게시글 수정</h1>
       </div>
       <form
-        th:action="@{/posts/{postId}/edit(postId=${post.id})}"
+        th:action="@{/posts/{postId}/edit(postId=${postResponseDTO.id})}"
         method="post"
         enctype="multipart/form-data"
       >
@@ -41,7 +41,7 @@
             maxlength="30"
             placeholder="게시글 제목 입력 (최대 30자)"
             required
-            th:value="${post.title}"
+            th:value="${postResponseDTO.title}"
           />
         </div>
         <div class="mb-3">
@@ -51,13 +51,34 @@
             id="content"
             name="content"
             placeholder="내용 입력"
-            th:text="${post.content}"
+            th:text="${postResponseDTO.content}"
           ></textarea>
         </div>
         <div class="mb-3">
           <label for="file">이미지 업로드</label>
           <input type="file" class="form-control" id="file" name="file"/>
         </div>
+        <div class="mb-3">
+          <label for="userId">작성자 ID</label>
+          <input
+                  class="form-control"
+                  id="userId"
+                  name="userId"
+                  maxlength="200"
+                  placeholder="ID 입력"
+                  th:field="*{postResponseDTO.userId}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password">작성자 비밀번호</label>
+          <input
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  maxlength="200"
+                  placeholder="비밀번호 입력"
+                  th:field="*{postResponseDTO.password}"
+          />
         <button type="submit" class="btn btn-primary">수정</button>
         <button
           type="button"

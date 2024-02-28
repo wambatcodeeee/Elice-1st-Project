@@ -52,6 +52,16 @@
           <label for="file">이미지 업로드</label>
           <input type="file" class="form-control" id="file" name="file"/>
         </div>
+        <div class="mb-3">
+          <label for="userId">작성자 ID</label>
+          <input
+                  class="form-control"
+                  id="userId"
+                  name="userId"
+                  maxlength="200"
+                  placeholder="ID 입력"
+          />
+        </div>
         <button type="submit" class="btn btn-primary">업로드</button>
         <button type="button" class="btn btn-secondary" onclick="window.history.back();">취소</button>
       </form>
