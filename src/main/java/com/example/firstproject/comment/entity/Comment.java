@@ -1,6 +1,7 @@
 package com.example.firstproject.comment.entity;
 
 import com.example.firstproject.base.BaseEntity;
+import com.example.firstproject.user.entity.User;
 import jakarta.persistence.*;
 import com.example.firstproject.post.entity.Post;
 import lombok.*;
@@ -18,6 +19,12 @@ public class Comment extends BaseEntity {
 
     @Column
     private String content;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+            @JoinColumn(name = "password", referencedColumnName = "password")})
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", referencedColumnName = "post_id")

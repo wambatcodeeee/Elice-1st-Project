@@ -25,7 +25,6 @@ public class PostController {
     private final PostMapper postMapper;
     private final CommentService commentService;
 
-    @Autowired
     public PostController(PostService postService, PostMapper postMapper, CommentService commentService){
         this.postService = postService;
         this.postMapper = postMapper;

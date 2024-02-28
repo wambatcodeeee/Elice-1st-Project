@@ -28,7 +28,6 @@ public class BoardController {
     private final BoardMapper boardMapper;
     private final PostService postService;
 
-    @Autowired
     public BoardController(BoardService boardService, BoardMapper boardMapper, PostService postService) {
         this.boardService = boardService;
         this.boardMapper = boardMapper;

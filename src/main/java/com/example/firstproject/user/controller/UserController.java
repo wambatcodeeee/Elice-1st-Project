@@ -1,4 +1,4 @@
-package com.example.firstproject.user;
+package com.example.firstproject.user.controller;
 
 import com.example.firstproject.user.entity.User;
 import com.example.firstproject.user.service.UserService;

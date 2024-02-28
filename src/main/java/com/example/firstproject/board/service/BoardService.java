@@ -16,7 +16,6 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardFileService boardFileService;
 
-    @Autowired
     public BoardService(BoardRepository boardRepository,BoardFileService boardFileService){
         this.boardRepository = boardRepository;
         this.boardFileService = boardFileService;
