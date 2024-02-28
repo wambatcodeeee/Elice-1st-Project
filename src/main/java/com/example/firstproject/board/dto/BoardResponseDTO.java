@@ -12,13 +12,18 @@ public class BoardResponseDTO {
     private String content;
     private String filename;
     private String filepath;
+    private String userId;
+    private String password;
 
     @Builder
-    public BoardResponseDTO(Long id, String boardTitle, String content, String filename, String filepath) {
+    public BoardResponseDTO(Long id, String boardTitle, String content, String filename, String filepath, String userId,
+                            String password) {
         this.id = id;
         this.boardTitle = boardTitle;
         this.content = content;
         this.filename = filename;
         this.filepath = filepath;
+        this.userId = userId;
+        this.password = password;
     }
 }

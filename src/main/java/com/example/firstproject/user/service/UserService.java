@@ -18,6 +18,15 @@ public class UserService {
         return userRepository.existsByUserId(userId);
     }
 
+    public String findPassword(String userId){
+        User user = userRepository.findByUserId(userId);
+        return user.getPassword();
+    }
+
+    public User findUserByUserId(String userId){
+        return userRepository.findByUserId(userId);
+    }
+
     public void signup(User user) {
         user.setUserId(user.getUserId());
         user.setPassword(user.getPassword());
