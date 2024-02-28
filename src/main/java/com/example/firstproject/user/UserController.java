@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
@@ -17,28 +19,29 @@ public class UserController {
 
     @GetMapping("/signup")
     public String showSignupForm() {
-        return "signup";
+        return "user/signup";
     }
 
     @PostMapping("/signup")
-    public String signup(String userId, String password) {
+    public String signup(@RequestParam("userId") String userId, @RequestParam("password") String password) {
         userService.signup(userId, password);
         return "redirect:/login";
     }
 
     @GetMapping("/login")
-    public String showLoginForm() {
-        return "login";
+    public String showLoginForm(Model model) {
+        model.addAttribute("user", new User());
+        return "user/login";
     }
 
     @PostMapping("/login")
-    public String login(String userId, String password, Model model) {
-        User user = userService.login(userId, password);
-        if (user != null) {
-            model.addAttribute("userId", userId);
+    public String login(@ModelAttribute("user") User user, Model model) {
+        User loginUser = userService.login(user.getUserId(), user.getPassword());
+        if (loginUser != null) {
+            model.addAttribute("userId", user.getUserId());
             return "/board/boards";
         } else {
-            return "login";
+            return "user/login";
         }
     }
 }
