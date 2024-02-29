@@ -43,17 +43,17 @@
         class="link link-offset-1 link-offset-2-hover text-sm fs-6 mb-2 d-block"
         style="transition: all 0.1s ease-in-out"
         th:href="@{/boards/{boardId}(boardId=${post.board.id})}"
-        >&larr; 게시판으로 돌아가기</a
+        >&larr; 카테고리 목록으로 돌아가기</a
       >
       <div class="container border rounded p-4 position-relative">
         <div class="header mb-3">
-          <h2 class="text-start" th:text="${post.title}">게시글 제목</h2>
+          <h2 class="text-start" th:text="${post.title}">음식 제목</h2>
           <img class="img-thumbnail w-50 h-50 me-3" th:src="@{/files/{filepath}(filepath=${post.filename})}" th:alt="${post.filename}" />
         </div>
-        <p class="m-0" th:text="${post.content}">게시글 내용</p>
+        <p class="m-0" th:text="${post.content}">음식 레시피 내용</p>
         <hr class="mt-4" />
         <h4 class="mb-3">
-          댓글
+          리뷰 댓글
           <small
             class="text-secondary"
             id="commentsCount"
@@ -71,7 +71,7 @@
             th:each="comment : ${comments}"
           >
             <div class="card-body position-relative">
-              <p class="mb-2" th:text="${comment.content}">댓글 내용</p>
+              <p class="mb-2" th:text="${comment.content}">리뷰 댓글 내용</p>
               <small class="text-secondary">2024-01-04T13:21:21</small>
 
               <div
@@ -176,7 +176,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="deletePostModalLabel">
-              게시글을 삭제하시겠습니까?
+              음식 레시피를 삭제하시겠습니까?
             </h1>
             <button
               type="button"
@@ -186,7 +186,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <p class="fw-light">게시글과 댓글이 삭제됩니다.</p>
+            <p class="fw-light">음식 레시피와 리뷰 댓글이 삭제됩니다.</p>
           </div>
           <div class="modal-footer">
             <button

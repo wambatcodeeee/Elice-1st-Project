@@ -43,15 +43,15 @@
         display: flex;
       }
     </style>
-    <title>게시판</title>
+    <title>레시피 게시판</title>
   </head>
   <body>
     <div class="container my-5">
       <div class="header mb-5">
-        <h1 class="text-center">게시판 목록</h1>
+        <h1 class="text-center">음식 종류 카테고리</h1>
       </div>
       <div class="d-flex justify-content-end mb-3">
-        <a th:href="@{/boards/create}" class="btn btn-primary">게시판 추가</a>
+        <a th:href="@{/boards/create}" class="btn btn-primary">카테고리 추가</a>
       </div>
       <div class="container p-0">
         <div class="row row-cols-3 position-relative">
@@ -115,7 +115,7 @@
         <span
           th:if="${#lists.isEmpty(boards)}"
           class="d-block w-100 text-center"
-          >생성된 게시판이 없습니다.</span
+          >생성된 카테고리가 없습니다.</span
         >
       </div>
     </div>
@@ -131,7 +131,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="deleteModalLabel">
-              게시판을 삭제하시겠습니까?
+              카테고리를 삭제하시겠습니까?
             </h1>
             <button
               type="button"
@@ -141,7 +141,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <p class="fw-light">게시판에 포함된 모든 게시글이 삭제됩니다.</p>
+            <p class="fw-light">카테고리에 포함된 모든 레시피들이 삭제됩니다.</p>
           </div>
           <div class="modal-footer">
             <button

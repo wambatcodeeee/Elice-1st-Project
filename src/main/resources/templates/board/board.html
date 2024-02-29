@@ -31,10 +31,10 @@
         class="link link-offset-1 link-offset-2-hover text-sm fs-6 mb-2 d-block"
         style="transition: all 0.1s ease-in-out"
         th:href="@{/boards}"
-        >&larr; 게시판 목록으로 돌아가기</a
+        >&larr; 카테고리 목록으로 돌아가기</a
       >
       <div class="header mb-5">
-        <h1 class="text-center" th:text="${board.boardTitle}">게시판 제목</h1>
+        <h1 class="text-center" th:text="${board.boardTitle}">카테고리 제목</h1>
         <p
           class="text-center text-secondary"
           th:text="${board.content}"
@@ -46,7 +46,7 @@
             <input
               class="form-control"
               name="keyword"
-              placeholder="키워드 검색"
+              placeholder="음식 레시피 검색"
               th:value="${keyword}"
             />
             <button class="btn btn-primary lh-1 p-0 px-2">
@@ -57,7 +57,7 @@
         <a
           th:href="@{/posts/create(boardId=${board.id})}"
           class="btn btn-primary"
-          >게시글 추가</a
+          >음식 레시피 추가</a
         >
       </div>
       <div class="list-group position-relative mb-3">
@@ -67,15 +67,15 @@
           th:each="post : ${postPage}"
           th:href="@{/posts/{postId}(postId=${post.id})}"
         >
-          <h4 class="fw-bold mb-1" th:text="${post.title}">게시글 제목</h4>
+          <h4 class="fw-bold mb-1" th:text="${post.title}">음식 제목</h4>
           <small class="text-secondary" th:text="${post.createdAt}"
-            >게시글 생성일</small
+            >음식 레시피 생성일</small
           >
         </a>
         <span
           th:if="${postPage.isEmpty()}"
           class="text-center"
-          th:text="${keyword != null ? '`' + keyword + '` 키워드에 해당하는 게시글이 없습니다.' : '올라온 게시글이 없습니다.'}"
+          th:text="${keyword != null ? '`' + keyword + '` 검색어에 해당하는 음식 레시피가 없습니다.' : '올라온 음식 레시피가 없습니다.'}"
         ></span>
       </div>
       <div class="w-100 d-flex justify-content-center">

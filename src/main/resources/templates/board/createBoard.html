@@ -19,35 +19,35 @@
         font-family: "Elice DX Neolli", sans-serif;
       }
     </style>
-    <title>게시판 추가</title>
+    <title>음식 카테고리 추가</title>
   </head>
   <body>
     <div class="container my-5">
       <div class="header mb-5">
-        <h1 class="text-center">게시판 추가</h1>
+        <h1 class="text-center">카테고리 추가</h1>
       </div>
       <form th:action="@{/boards/create}" method="post" th:object="${boardRequestDTO}" enctype="multipart/form-data">
         <div class="mb-3">
-          <label for="name">게시판 이름</label>
+          <label for="name">카테고리 이름</label>
           <input
             type="text"
             class="form-control"
             id="name"
             name="name"
             maxlength="20"
-            placeholder="게시판 이름 입력 (최대 20자)"
+            placeholder="카테고리 이름 입력 (최대 20자)"
             required
             th:field="*{boardTitle}"
           />
         </div>
         <div class="mb-3">
-          <label for="description">게시판 설명</label>
+          <label for="description">카테고리 설명</label>
           <textarea
             class="form-control"
             id="description"
             name="description"
             maxlength="200"
-            placeholder="게시판 설명 입력 (최대 200자)"
+            placeholder="카테고리 설명 입력 (최대 200자)"
             th:field="*{content}"
           ></textarea>
         </div>
@@ -66,7 +66,7 @@
                   th:field="*{userId}"
           />
         </div>
-        <button type="submit" class="btn btn-primary">게시판 추가</button>
+        <button type="submit" class="btn btn-primary">카테고리 추가</button>
         <button
           type="button"
           class="btn btn-secondary"

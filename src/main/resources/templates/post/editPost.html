@@ -19,12 +19,12 @@
         font-family: "Elice DX Neolli", sans-serif;
       }
     </style>
-    <title>게시글 수정</title>
+    <title>음식 레시피 수정</title>
   </head>
   <body>
     <div class="container my-5">
       <div class="header mb-5">
-        <h1 class="text-center">게시글 수정</h1>
+        <h1 class="text-center">음식 레시피 수정</h1>
       </div>
       <form
         th:action="@{/posts/{postId}/edit(postId=${postResponseDTO.id})}"
@@ -32,25 +32,25 @@
         enctype="multipart/form-data"
       >
         <div class="mb-3">
-          <label for="title">게시글 제목</label>
+          <label for="title">음식 제목</label>
           <input
             type="text"
             class="form-control"
             id="title"
             name="title"
             maxlength="30"
-            placeholder="게시글 제목 입력 (최대 30자)"
+            placeholder="음식 제목 입력 (최대 30자)"
             required
             th:value="${postResponseDTO.title}"
           />
         </div>
         <div class="mb-3">
-          <label for="content">내용</label>
+          <label for="content">음식 레시피</label>
           <textarea
             class="form-control"
             id="content"
             name="content"
-            placeholder="내용 입력"
+            placeholder="레시피 입력"
             th:text="${postResponseDTO.content}"
           ></textarea>
         </div>
