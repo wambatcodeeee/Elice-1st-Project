@@ -236,6 +236,27 @@
                 id="commentContentTextarea"
                 placeholder="댓글 수정하기..."
               ></textarea>
+              <div class="mb-3">
+                <label for="userId">작성자 ID</label>
+                <input
+                        class="form-control"
+                        id="userId"
+                        name="userId"
+                        maxlength="200"
+                        placeholder="ID 입력"
+                        required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="password">작성자 비밀번호</label>
+                <input
+                        class="form-control"
+                        id="password"
+                        name="password"
+                        maxlength="200"
+                        placeholder="비밀번호 입력"
+                        required
+                />
             </div>
             <div class="modal-footer">
               <button
@@ -246,6 +267,7 @@
                 취소
               </button>
               <button class="btn btn-primary">수정</button>
+            </div>
             </div>
           </form>
         </div>

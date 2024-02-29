@@ -36,6 +36,11 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
+    public Long findPostIdById(Long id){
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new Exception(ExceptionEnum.COMMENT_NOT_FOUND));
+        return comment.getPost().getId();
+    }
+
     public List<Comment> findCommentsByPostId(Long postId){
         return commentRepository.findCommentsByPostId(postId);
     }
