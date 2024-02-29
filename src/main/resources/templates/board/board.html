@@ -69,8 +69,9 @@
         >
           <h4 class="fw-bold mb-1" th:text="${post.title}">음식 제목</h4>
           <small class="text-secondary" th:text="${post.createdAt}"
-            >음식 레시피 생성일</small
-          >
+            >음식 레시피 생성일</small>
+          <small class="text-secondary" th:text="${post.user.userId}"
+          >작성자</small>
         </a>
         <span
           th:if="${postPage.isEmpty()}"

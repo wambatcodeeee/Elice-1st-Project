@@ -72,7 +72,9 @@
           >
             <div class="card-body position-relative">
               <p class="mb-2" th:text="${comment.content}">리뷰 댓글 내용</p>
-              <small class="text-secondary">2024-01-04T13:21:21</small>
+              <small class="text-secondary" th:text="${comment.createdAt}">2024-01-04T13:21:21</small>
+              <span class="card-text text-secondary text-wrap" th:text="${comment.user.userId}"
+              >작성자</span>
 
               <div
                 class="position-absolute end-0 top-50 translate-middle-y mb-3 me-3 btn-group bg-white bg-opacity-75"
