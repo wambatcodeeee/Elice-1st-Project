@@ -18,14 +18,11 @@ public class CommentController {
     private final CommentService commentService;
     private final CommentMapper commentMapper;
     private final UserService userService;
-    private final PostService postService;
 
-    public CommentController(CommentService commentService, CommentMapper commentMapper, UserService userService,
-                             PostService postService){
+    public CommentController(CommentService commentService, CommentMapper commentMapper, UserService userService){
         this.commentService = commentService;
         this.commentMapper = commentMapper;
         this.userService = userService;
-        this.postService = postService;
     }
 
     @PostMapping
