@@ -7,6 +7,7 @@ import com.example.firstproject.board.entity.BoardMapper;
 import com.example.firstproject.board.service.BoardService;
 import com.example.firstproject.post.entity.Post;
 import com.example.firstproject.post.service.PostService;
+import com.example.firstproject.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,12 +28,13 @@ public class BoardController {
     private final BoardService boardService;
     private final BoardMapper boardMapper;
     private final PostService postService;
+    private final UserService userService;
 
-    @Autowired
-    public BoardController(BoardService boardService, BoardMapper boardMapper, PostService postService) {
+    public BoardController(BoardService boardService, BoardMapper boardMapper, PostService postService, UserService userService) {
         this.boardService = boardService;
         this.boardMapper = boardMapper;
         this.postService = postService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -69,9 +71,9 @@ public class BoardController {
     }
 
     @PostMapping(value = "/create")
-    public String saveBoard(@ModelAttribute("board") BoardRequestDTO boardRequestDTO, MultipartFile file) throws IOException {
+    public String saveBoard(@ModelAttribute("board") BoardRequestDTO boardRequestDTO, MultipartFile file, String userId) throws IOException {
         Board board = boardMapper.boardRequestDTOToBoard(boardRequestDTO);
-        boardService.saveBoard(board, file);
+        boardService.saveBoard(board, file, userId);
         return "redirect:/boards";
     }
 
@@ -95,10 +97,14 @@ public class BoardController {
 
     @PostMapping(value = "/{id}/edit")
     public String updateBoard(@PathVariable("id") Long id, @ModelAttribute("board") BoardRequestDTO boardRequestDTO,
-                              MultipartFile file) throws IOException {
+                              String userId, String password, MultipartFile file) throws IOException {
         Board board = boardMapper.boardRequestDTOToBoard(boardRequestDTO).toBuilder().id(id).build();
-        boardService.updateBoard(board, file);
-        return "redirect:/boards";
+        if(userService.login(userId, password) != null){
+            boardService.updateBoard(board, file, userId);
+            return "redirect:/boards";
+        }else{
+            return "redirect:/boards/{id}/edit";
+        }
     }
 
     /**@PostMapping(value = "/{id}/edit", consumes = MediaType.APPLICATION_JSON_VALUE)

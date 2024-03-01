@@ -1,11 +1,14 @@
 package com.example.firstproject.post.controller;
 
+import com.example.firstproject.board.dto.BoardResponseDTO;
 import com.example.firstproject.comment.entity.Comment;
 import com.example.firstproject.comment.service.CommentService;
 import com.example.firstproject.post.dto.PostRequestDTO;
+import com.example.firstproject.post.dto.PostResponseDTO;
 import com.example.firstproject.post.entity.Post;
 import com.example.firstproject.post.entity.PostMapper;
 import com.example.firstproject.post.service.PostService;
+import com.example.firstproject.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -24,12 +27,14 @@ public class PostController {
     private final PostService postService;
     private final PostMapper postMapper;
     private final CommentService commentService;
+    private final UserService userService;
 
-    @Autowired
-    public PostController(PostService postService, PostMapper postMapper, CommentService commentService){
+    public PostController(PostService postService, PostMapper postMapper, CommentService commentService,
+                          UserService userService){
         this.postService = postService;
         this.postMapper = postMapper;
         this.commentService = commentService;
+        this.userService = userService;
     }
 
     @GetMapping("/{postId}")
@@ -48,9 +53,10 @@ public class PostController {
     }
 
     @PostMapping(value = "/create")
-    public String createPost(@ModelAttribute PostRequestDTO postRequestDTO, @RequestParam Long boardId, MultipartFile file) throws IOException {
+    public String createPost(@ModelAttribute PostRequestDTO postRequestDTO, @RequestParam Long boardId, MultipartFile file,
+                             String userId) throws IOException {
         Post post = postMapper.postRequestDTOToPost(postRequestDTO);
-        Post createdPost = postService.createPost(post, boardId, file);
+        Post createdPost = postService.createPost(post, boardId, file, userId);
 
         return "redirect:/boards/" + createdPost.getBoard().getId();
     }
@@ -65,19 +71,24 @@ public class PostController {
     @GetMapping("/{postId}/edit")
     public String editPost(@PathVariable Long postId, Model model) {
         Post post = postService.findPost(postId);
-        model.addAttribute("post", post);
+        PostResponseDTO postResponseDTO = postMapper.postToPostResponseDTO(post);
+        model.addAttribute("postResponseDTO", postResponseDTO);
         return "post/editPost";
     }
 
     @PostMapping(value = "/{postId}/edit")
     public String editPost(@PathVariable Long postId, @ModelAttribute PostRequestDTO postRequestDTO,
-                           MultipartFile file, RedirectAttributes redirectAttributes) throws IOException {
+                           MultipartFile file, String userId,
+                           String password, RedirectAttributes redirectAttributes) throws IOException {
         Post post = postMapper.postRequestDTOToPost(postRequestDTO);
-        Post updatedPost = postService.updatePost(post, postId, file);
-
-        redirectAttributes.addAttribute("postId", updatedPost.getId());
-        redirectAttributes.addFlashAttribute("message", "게시글이 수정되었습니다.");
-        return "redirect:/posts/{postId}";
+        if(userService.login(userId, password) != null) {
+            Post updatedPost = postService.updatePost(post, postId, file, userId);
+            redirectAttributes.addAttribute("postId", updatedPost.getId());
+            redirectAttributes.addFlashAttribute("message", "게시글이 수정되었습니다.");
+            return "redirect:/posts/{postId}";
+        }else{
+            return "redirect:/posts/{postId}/edit";
+        }
     }
 
     /**@PostMapping(value = "/{postId}/edit", consumes = MediaType.APPLICATION_JSON_VALUE)

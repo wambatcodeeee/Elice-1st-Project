@@ -1,6 +1,7 @@
 package com.example.firstproject.board.entity;
 
 import com.example.firstproject.post.entity.Post;
+import com.example.firstproject.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +30,12 @@ public class Board {
 
     @Column
     private String filepath;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+            @JoinColumn(name = "password", referencedColumnName = "password")})
+    private User user;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();

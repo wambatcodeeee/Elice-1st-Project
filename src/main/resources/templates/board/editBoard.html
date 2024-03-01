@@ -14,27 +14,49 @@
       font-family: "Elice DX Neolli", sans-serif;
     }
   </style>
-  <title>게시판 수정</title>
+  <title>음식 카테고리 수정</title>
 </head>
 <body>
 <div class="container my-5">
   <div class="header mb-5">
-    <h1 class="text-center">게시판 수정</h1>
+    <h1 class="text-center">카테고리 수정</h1>
   </div>
   <form th:action="@{/boards/{id}/edit(id=${boardResponseDTO.id})}" method="post" enctype="multipart/form-data">
   <div class="mb-3">
-      <label for="name">게시판 이름</label>
+      <label for="name">카테고리 이름</label>
       <input type="text" class="form-control" id="name" name="boardTitle" maxlength="20"
-             placeholder="게시판 이름 입력 (최대 20자)" required th:value="${boardResponseDTO.boardTitle}"/>
+             placeholder="카테고리 이름 입력 (최대 20자)" required th:value="${boardResponseDTO.boardTitle}"/>
     </div>
     <div class="mb-3">
-      <label for="description">게시판 설명</label>
+      <label for="description">카테고리 설명</label>
       <textarea class="form-control" id="description" name="content" maxlength="200"
-                placeholder="게시판 설명 입력 (최대 200자)" th:text="${boardResponseDTO.content}"></textarea>
+                placeholder="카테고리 설명 입력 (최대 200자)" th:text="${boardResponseDTO.content}"></textarea>
     </div>
     <div class="mb-3">
       <label for="file">이미지 업로드</label>
       <input type="file" class="form-control" id="file" name="file"/>
+    </div>
+    <div class="mb-3">
+      <label for="userId">작성자 ID</label>
+      <input
+              class="form-control"
+              id="userId"
+              name="userId"
+              maxlength="200"
+              placeholder="ID 입력"
+              th:field="*{boardResponseDTO.userId}"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="password">작성자 비밀번호</label>
+      <input
+              class="form-control"
+              id="password"
+              name="password"
+              maxlength="200"
+              placeholder="비밀번호 입력"
+              th:field="*{boardResponseDTO.password}"
+      />
     </div>
     <button type="submit" class="btn btn-primary">게시판 수정</button>
     <button type="button" class="btn btn-secondary" onclick="window.history.back();">취소</button>

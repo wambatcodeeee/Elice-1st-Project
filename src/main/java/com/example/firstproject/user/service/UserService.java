@@ -14,10 +14,22 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void signup(String userId, String password) {
-        User user = new User();
-        user.setUserId(userId);
-        user.setPassword(password);
+    public boolean validation(String userId){
+        return userRepository.existsByUserId(userId);
+    }
+
+    public String findPassword(String userId){
+        User user = userRepository.findByUserId(userId);
+        return user.getPassword();
+    }
+
+    public User findUserByUserId(String userId){
+        return userRepository.findByUserId(userId);
+    }
+
+    public void signup(User user) {
+        user.setUserId(user.getUserId());
+        user.setPassword(user.getPassword());
         userRepository.save(user);
     }
 
