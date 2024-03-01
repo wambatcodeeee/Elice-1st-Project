@@ -1,13 +1,16 @@
 package com.example.firstproject.comment.entity;
 
-import com.example.firstproject.post.entity.PostDTO;
 import lombok.*;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class CommentDTO {
-    private Long commentId;
+    private Long id;
     private String content;
-    private PostDTO post;
+
+    @Builder
+    public CommentDTO(Long id, String content) {
+        this.id = id;
+        this.content = content;
+    }
 }

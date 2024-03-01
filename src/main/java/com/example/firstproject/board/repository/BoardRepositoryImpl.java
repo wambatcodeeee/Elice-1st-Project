@@ -17,23 +17,36 @@ public class BoardRepositoryImpl implements BoardRepository {
 
     @Override
     public void save(Board board) {
-        jdbcTemplate.update("INSERT INTO board (board_title) VALUES (?)", board.getBoardTitle());
+        jdbcTemplate.update("INSERT INTO board (board_title, content, filename, filepath, user_id, password) VALUES (?, ?, ?, ?, ?, ?)",
+                board.getBoardTitle(),
+                board.getContent(),
+                board.getFilename(),
+                board.getFilepath(),
+                board.getUser().getUserId(),
+                board.getUser().getPassword());
     }
 
 
     @Override
     public void update(Board board) {
-        jdbcTemplate.update("UPDATE board SET boardTitle = ? WHERE boardId = ?", board.getBoardTitle(), board.getBoardId());
+        jdbcTemplate.update("UPDATE board SET board_title = ?, content = ?, filename = ?, filepath = ?, user_id = ?, password = ? WHERE id = ?",
+                board.getBoardTitle(),
+                board.getContent(),
+                board.getFilename(),
+                board.getFilepath(),
+                board.getUser().getUserId(),
+                board.getUser().getPassword(),
+                board.getId());
     }
 
     @Override
     public void deleteById(Long boardId) {
-        jdbcTemplate.update("DELETE FROM board WHERE boardId = ?", boardId);
+        jdbcTemplate.update("DELETE FROM board WHERE id = ?", boardId);
     }
 
     @Override
     public Board findById(Long boardId) {
-        List<Board> result = jdbcTemplate.query("SELECT * FROM board WHERE boardId = ?",
+        List<Board> result = jdbcTemplate.query("SELECT * FROM board WHERE id = ?",
                 new Object[]{boardId},
                 new BeanPropertyRowMapper<>(Board.class));
 
